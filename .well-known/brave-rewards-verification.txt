@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: kaeuoi.github.io
+Token: 19126f9d9346ed33cf213fbc9b4206db48e82fdc902d7deef2c2e08fa0bf0592
