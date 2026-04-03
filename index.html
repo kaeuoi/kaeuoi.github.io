@@ -1,236 +1,583 @@
 <!DOCTYPE html>
-<html>
-  <head>
-      <meta charset="utf-8">
-      <meta content="width=device-width, initial-scale=1">
-      <title>Kaeuoi</title>
-      <link href="style.css" type="text/css" rel="stylesheet">
-    
-    <!--Kaeuoi favicon code from: https://realfavicongenerator.net/favicon_result?file_id=p1g0qp3kto137e1qtv1ith138p12p46-->
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="manifest" href="/site.webmanifest">
-<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-<!--end of favicon code-->
-      
-      <!--ShareCode-->
-      <meta name="twitter:card" content="summary_large_image">
-      <meta property="og:title" content="Kaeuoi">
-      <meta property="og:description" content="Kaeuoi Internet Community will be the social network of Ipparts Exchange (IPPAEX)">
-      <meta property="og:image" content="https://kaeuoi.github.io/Triangle.png">
-      <meta property="og:url" content="https://kaeuoi.github.io/index.html">
-      <!---->
-  </head>
-    <body>
-      
-      <header>
-        
-        <div class="logo-img" style="float:left">
-          <a href="https://www.africahead.co.za">
-              <img src="img/logo.png" alt="Africahead logo" height="50" width="50">
-          </a>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kaeuoi — Social Network of IPPAEX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Josefin+Sans:wght@200;400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       CSS VARIABLES — edit colours and fonts here easily
+    ========================================================= */
+    :root {
+      --bg:          #0d1117;
+      --surface:     #131920;
+      --border:      #1e2d3d;
+      --accent:      #4fc3a1;      /* teal — change to any colour */
+      --accent2:     #e8c468;      /* gold accent */
+      --text:        #d4dde8;
+      --text-muted:  #6e849a;
+      --heading:     #ffffff;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'Josefin Sans', sans-serif;
+    }
+
+    /* =========================================================
+       RESET & BASE
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 200;
+      font-size: 1rem;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent2); text-decoration: underline; }
+
+    /* =========================================================
+       ANIMATED BACKGROUND GRID
+    ========================================================= */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(79,195,161,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(79,195,161,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =========================================================
+       LAYOUT HELPERS
+    ========================================================= */
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* =========================================================
+       HEADER / HERO
+    ========================================================= */
+    header {
+      position: relative;
+      padding: 4rem 0 3rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-wrap {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    .logo-wrap img {
+      width: 80px;
+      height: auto;
+      filter: drop-shadow(0 0 18px rgba(79,195,161,0.45));
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .site-name {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 10vw, 5.5rem);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--heading);
+      line-height: 1;
+    }
+
+    .site-name span { color: var(--accent); }
+
+    .tagline {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* pill badge */
+    .badge {
+      display: inline-block;
+      margin-top: 1.6rem;
+      padding: 0.35em 1.1em;
+      border: 1px solid var(--accent);
+      border-radius: 99px;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* =========================================================
+       NAV
+    ========================================================= */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.75rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    nav a { color: var(--text-muted); transition: color 0.2s; }
+    nav a:hover { color: var(--accent); text-decoration: none; }
+
+    /* =========================================================
+       SECTIONS
+    ========================================================= */
+    section {
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 300;
+      color: var(--heading);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    h2 .accent { color: var(--accent); }
+
+    h3 {
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.6rem;
+    }
+
+    p { margin-bottom: 1rem; max-width: 70ch; }
+    p:last-child { margin-bottom: 0; }
+
+    /* =========================================================
+       FEATURE CARDS
+    ========================================================= */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.8rem;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .card-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .card h4 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--heading);
+      margin-bottom: 0.5rem;
+    }
+
+    .card p { font-size: 0.88rem; color: var(--text-muted); }
+
+    /* =========================================================
+       TOKEN TABLE
+    ========================================================= */
+    .token-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2rem;
+      font-size: 0.88rem;
+    }
+
+    .token-table th {
+      text-align: left;
+      padding: 0.7rem 1rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .token-table td {
+      padding: 0.9rem 1rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+
+    .token-table tr:hover td { background: var(--surface); }
+
+    .token-ticker {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+    }
+
+    /* =========================================================
+       LOGO SECTION
+    ========================================================= */
+    .logo-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .logo-section img {
+      width: 140px;
+      height: auto;
+      filter: drop-shadow(0 0 24px rgba(79,195,161,0.35));
+    }
+
+    .logo-text { flex: 1; min-width: 240px; }
+
+    /* =========================================================
+       CONTACT STRIP
+    ========================================================= */
+    .contact-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .contact-item .icon { font-size: 1.1rem; }
+
+    .contact-item a { color: var(--accent); }
+
+    /* =========================================================
+       CTA BUTTON
+    ========================================================= */
+    .btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.75em 2em;
+      border: 1px solid var(--accent);
+      border-radius: 2px;
+      color: var(--accent);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      text-decoration: none;
+    }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+    footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--accent); text-decoration: none; }
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+    @media (max-width: 600px) {
+      nav { gap: 1.2rem; flex-wrap: wrap; }
+      .logo-section { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======================================================
+       HEADER
+  ====================================================== -->
+  <header>
+    <div class="container">
+      <div class="logo-wrap">
+        <!-- Africahead / Kaeuoi logo -->
+        <img src="img/logo.png" alt="Africahead logo" />
+      </div>
+      <div class="site-name">KA<span>E</span>UOI</div>
+      <div class="tagline">Social Network of Ipparts Exchange · IPPAEX</div>
+      <span class="badge">Coming Soon · Join the Community</span>
+    </div>
+  </header>
+
+  <!-- ======================================================
+       NAV
+  ====================================================== -->
+  <nav>
+    <a href="#objective">Objective</a>
+    <a href="#membership">Membership</a>
+    <a href="#tokens">Tokens</a>
+    <a href="#logo">Logo</a>
+    <a href="#contact">Contact</a>
+    <a href="https://africahead.github.io/Africahead/IppartsExchange.html" target="_blank" rel="noopener">IPPAEX ↗</a>
+  </nav>
+
+  <!-- ======================================================
+       MAIN CONTENT
+  ====================================================== -->
+  <main>
+
+    <!-- OBJECTIVE -->
+    <section id="objective">
+      <div class="container">
+        <h3>What is Kaeuoi</h3>
+        <h2>A Community That <span class="accent">Owns Its Value</span></h2>
+
+        <p>
+          Kaeuoi is best understood as a new kind of labour union — one rooted not in the
+          labour theory of capital, but in <strong>Intequity</strong>: the capital of ideas combined
+          with labour. Its purpose is to unite Internet users against exploitation, especially
+          by social media platforms that profit from their members' ideas and personal information
+          without fair compensation.
+        </p>
+        <p>
+          The Kaeuoi Community uses collective power to negotiate better circumstances for its
+          members — including the redirection of advertising income back to the people who
+          create the value in the first place.
+        </p>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-icon">🤝</div>
+            <h4>Collective Power</h4>
+            <p>Members pool their influence to negotiate fairer treatment from platforms and advertisers.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">💡</div>
+            <h4>Intequity</h4>
+            <p>Ideas are capital. Kaeuoi recognises and rewards the intellectual contributions of its members.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🌍</div>
+            <h4>Migration Rights</h4>
+            <p>If a platform fails to respect the community, Kaeuoi members can migrate together to better pastures.</p>
+          </div>
+          <div class="card">
+            <div class="card-icon">📢</div>
+            <h4>Shared Revenue</h4>
+            <p>Advertising income diverted to community members — your attention has real worth.</p>
+          </div>
         </div>
-        
-        <nav>
-          <ul>
-            
-            <li><a href="https://africahead.github.io/Africahead/Team.html" target="_blank">Team</a></li>
-            <li><a href="https://africahead.github.io/Africahead/Contact.html" target="_blank">Contact</a></li>
-            <li><a href="" target="_blank">Menu</a></li>
-            <li><a href="" target="_blank">Menu</a></li>
-                
-          </ul>
-        </nav>
-    </header>
-      
-      <main>
-        
-        <!--<table>
-  Very important (NB): The project is cancelled. Only the Moyom (MYM) whitepaper was updated with the reasons for cancellation.
-   If someone wants to make a proposal to continue the project, please do by contacting Africahead.
-  The below information is outdated. The webpage was kept to continue the objectives of the project, to improve the current fallacious
-  utilitarianism of the current capitalist economic system.
-</table>-->
-      
-      <section>
-      <h2>Objective for Kaeuoi</h2>
-      
-      <p>
-        Kaeuoi can be compared to a labour union, representing the opposite than usual. Thus, instead of having the labour theory
-         of capital
-        as a root of its existence, Kaeuoi has Intequity (Capital of ideas) as a root, combining it with labour. The purpose is for
-        Internet users, to group together against exploitation on the Internet. Lately the news showed clearly, Internet users are
-        exploited, especially by social media websites. Imparting of ideas and personal information is worth a lot, making vast
-        amounts of money from it. Whilst accepting advertising, e.g. Kaeuoi Community will be, ones could say, a migrant 
-        community on the Internet,
-        to "greener pastures", if they are not sufficiently respected by the-exploiting. The Kaeuoi Community will use their group
-        power to negotiate better circumstances for the group on the Internet. An example of how group power can be used,
-         is, diverting
-        advertising income to Kaeuoi Community members. If website owners and managers will not be willing to share advertising
-         income
-        with Internet users, the Kaeuoi Community can migrate to other websites, where they are considered more.
-      </p>
+      </div>
+    </section>
 
-      <h2>Becoming a Member</h2>
+    <!-- MEMBERSHIP -->
+    <section id="membership">
+      <div class="container">
+        <h3>How to Join</h3>
+        <h2>Becoming a <span class="accent">Member</span></h2>
 
-      <p>Kaeuoi will be the social network of <a href="https://africahead.github.io/Africahead/IppartsExchange.html" 
-        target="_blank">Ipparts Exchange (IPPAEX)</a>. Groups will form on Kaeuoi representing the brand currencies listed
-         on IPPAEX. For example, one of the first groups will be the
-         <a href="https://fonetones.github.io/fonetones/FONtoken.html" target="_blank">fonetones (FON)</a> community.
-         Ownership of the FON brand currency will make a holder of FON an automatic member of the fonetones community
-         at the Kaeuoi social network, unless membership is cancelled. FON holders will have voting rights, equal to their
-         percentage holding of FON. FON holders will also communicate with Africahead, which owns 52% of the fonetones brand.
-         Communication between FON holders and Africahead, will increase the value of the fonetones (FON) brand currency with
-          good new ideas thought of by the community. Africahead will remunerate the community with FON brand tokens, for their
-          good ideas, as individuals and a group.
-      </p>
-      
-      <h3>Initial Token Offering and Links</h3>
-      
-      <p>
-        The plan to raise capital for Kaeuoi is: Kaeuoi (KAE) ERC20 brand tokens, on the Ethereum blockchain, are being issued to raise
-        capital for development of the Kaeuoi Community.
-      </p>
-      
-      <p>
-        Currently the logo, the name and the idea, explained above, make up the brand-value/goodwill. 
-        <!--To follow the developments go
-        to the 
-        <a href="https://www.africahead.co.za/Tokens/Kaeuoi.html" target="_blank">Initial Token Offering (ITO) page at Africahead.</a>-->
-      </p>
-      
-      <p>During the ITO and after the ITO, KAE brand tokens will be listed on 
-        <a href="https://www.africahead.co.za/Africahead/IppartsExchange.html" target="_blank">Ipparts Exchange (IPPAEX)</a>.
-      </p>
-        
-      <p>
-        <a href="https://www.africahead.co.za/Africahead/Moyom.html" target="_blank">Moyom (MYM)</a> utility token will be used as
-        the money for the Kaeuoi Community.
-      </p>
-        
-      <h3>Logo</h3>  
-        
-      
-      <img src="Triangle.png" alt="Triangle
-               logo" height="200" width="200">
-      
-      <p><a href="Triangle.png" target="_blank">Download</a> logo in .png format</p>
-      
-      <p><a href="Triangle.svg" target="_blank">Download</a> logo in .svg format</p>
-        
-        <p>Kaeuoi logo, in the above orientation, refers to one's own soul and comprehension of
-        idealism as opposed to materialism. Idealism basically means, humans structure matter and their
-        surrounds, starting with good ideas. Choosing idealism as dominant over materialism implies a choice is made for
-        survival with creative ways. It is a choice in favour of the ideas Truth and Love, against idolatry/messianism,
-         in favour of universal laws.
-        It is a choice in favour of groups Being good. Choosing idealism implies considering value added by labour and
-        ideas whilst remunerating accordingly, with for example, bonuses for good ideas.</p>
-        
-        <!--<img src="Triangle2.png" alt="Triangle
-               logo" height="200" width="200">-->
-        
-        <!--<p><a href="Triangle2.png" target="_blank">Download</a> logo in .png format</p>
-      
-      <p><a href="Triangle2.svg" target="_blank">Download</a> logo in .svg format</p>-->
-        
-        <p>If the logo is turned around, it refers to others' souls and choosing
-        materialism as opposed to idealism. Materialism basically means, humans are determined by matter and their
-        surrounds. Choosing materialism as dominant over idealism, means a choice is made for survival by murderous means.
-        It is a choice against the ideas Truth and Love, against universal laws. 
-        It is a choice in favour of idolatry, messianism, apocalypticism and evil singularity. 
-        Choosing materialism means trust in only the labour theory of capital,
-        whilst imparting ideas, without remunerating people for good ideas. The Kaeuoi logo may not be used in this orientation.</p>
-        
-        <!--<p><b>KAE Exchange Counter</b>
-        <br><img src="indexfiles/LedgerDexlogo.png" alt="LedgerDex logo" height="50" width="180">
-        <br><a href="https://app.ledgerdex.com/#/app/erc20token/0x4fe671f75febe114dbea88bb8266c177cb5e466a"
-        target="_blank">Wallet to wallet</a>
-         </p>
-        
-        <h2>Recommended Wallets</h2>
-            
-            <p>Sign with a
-            <br><img src="indexfiles/imTokenLogo.svg" alt="imToken" height="60" width="180">
-            <br><a href="https://token.im/" target="_blank">imToken Wallet</a>
-            <br>to connect and transact on Android Mobile at:</p>-->
-               
-        
-        <!--<p>(1) Sign in to Metamask.
-          <br>(2) The allowance bar first has to be moved to the right to give the smart contract 
-         the authority to exchange tokens.
-         <br> (3) Own bids to purchase KAE can also be formed with any Ethereum token. Please notify if it 
-        is done.
-        </p>-->
+        <p>
+          Kaeuoi will be the social network of
+          <a href="https://africahead.github.io/Africahead/IppartsExchange.html" target="_blank" rel="noopener">Ipparts Exchange (IPPAEX)</a>.
+          Membership is automatic for holders of any brand currency listed on IPPAEX.
+          Groups form around each brand currency, giving holders voting rights proportional
+          to their percentage holding — creating a genuine ownership stake in the community.
+        </p>
+        <p>
+          For example, holders of
+          <a href="https://fonetones.github.io/fonetones/FONtoken.html" target="_blank" rel="noopener">fonetones (FON)</a>
+          automatically join the fonetones community on Kaeuoi, where they can communicate with
+          Africahead — which holds 52% of the FON brand — and contribute ideas that grow
+          the brand's value. Good ideas are rewarded with additional FON tokens.
+        </p>
 
-        <!--<p>Counter bids to buy KAE can be placed. If a counter bid is placed, please send an email to confirm.</p>
-        
-        <p><b>∞ ⋈ ∞ ⋈ ∞ ⋈ ∞ ⋈ ∞ ⋈ ∞ ⋈</b></p>-->
-        
-        <!--<p><b>ETH/KAE Exchange Counter</b>
-               <br><img src="indexfiles/uniswapV1logo.jpg" alt="Uniswap logo" height="180" width="180">
-               <br><a href="https://etherscan.io/address/0x878f7a03ecd2884556b039af6944b2320cad4cf2" 
-                  target="_blank">
-               ETH/KAE Etherscan</a>
-               <br>
-    <br><a href="https://info.uniswap.org/pair/0xa3BB4cC6a3f5E7B27E786b6dac17daC44F65BE63" target="_blank">ETH/KAE Uniswap V1</a>
-               </p>-->
-        
-        <h2>Contact details:</h2>
-           <p>Tel: +27(0)824477125</p>
-           <p>Email:
-               <a href="mailto:africahead2@gmail.com?subject=Kaeuoi (KAE) tokens">africahead2@gmail.com</a>.
-           </p>    
-               
-           <p>Chat: 
-                  <!--<a href="https://gitter.im/Africahead/Lobby" target="_blank">Africahead lobby</a> at https://gitter.im
-                   or-->
-                   <a href="https://t.me/ippaex" target="_blank"> IPPAEX Telegram Chat Group</a>
-                   or 
-                   <a href="https://chat.whatsapp.com/K5sjXzrA81lLDukeNe1CG7" target="_blank"> WhatsApp</a>.</p>
-         <!--<p><a href="https://t.me/joinchat/AAAAAFDUXipgpuHCV0E9ug" target="_blank">Telegram News - not for chatting</a>.-->
-         <br><br><a href="https://africahead.github.io/Africahead/Promotions.html" target="_blank">Other</a> social media profiles.</p>
-        <br>
-        
-         <!-- AddToAny BEGIN -->
-<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-<a class="a2a_dd" href="https://www.addtoany.com/share">Sharing</a>
-</div>
-<script async src="https://static.addtoany.com/menu/page.js"></script>
-        
-      </section>
-      
-      <aside>
-          <a class="twitter-timeline" href="https://twitter.com/mdpienaar/timelines/1182535403615617024?ref_src=twsrc%5Etfw"
-          height="1250" overflow="scroll">#Kaeuoi -
-          Curated tweets by mdpienaar</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </aside>
-      
-      </main>
-      
-      <footer>
-        
-        <div class="logo-img" style="float:left">
-          <a href="https://www.africahead.co.za">
-              <img src="img/logo.png" alt="Africahead logo" height="50" width="50">
-          </a>
+        <a class="btn" href="https://africahead.github.io/Africahead/IppartsExchange.html" target="_blank" rel="noopener">
+          Explore IPPAEX →
+        </a>
+      </div>
+    </section>
+
+    <!-- TOKENS -->
+    <section id="tokens">
+      <div class="container">
+        <h3>Token Offering</h3>
+        <h2>KAE · <span class="accent">Capital for Development</span></h2>
+
+        <p>
+          Kaeuoi (KAE) ERC-20 brand tokens on the Ethereum blockchain are being issued to raise
+          capital for the development of the Kaeuoi Community. During and after the ITO, KAE
+          tokens will be listed on IPPAEX.
+          <a href="https://www.africahead.co.za/Africahead/Moyom.html" target="_blank" rel="noopener">Moyom (MYM)</a>
+          utility tokens will serve as the internal currency of the Kaeuoi Community.
+        </p>
+
+        <table class="token-table">
+          <thead>
+            <tr>
+              <th>Token</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Standard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="token-ticker">KAE</span></td>
+              <td>Kaeuoi</td>
+              <td>Brand / Governance token — raises development capital</td>
+              <td>ERC-20</td>
+            </tr>
+            <tr>
+              <td><span class="token-ticker">MYM</span></td>
+              <td>Moyom</td>
+              <td>Utility token — internal currency of the community</td>
+              <td>ERC-20</td>
+            </tr>
+            <tr>
+              <td><span class="token-ticker">FON</span></td>
+              <td>Fonetones</td>
+              <td>Example brand currency — first community group</td>
+              <td>ERC-20</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- LOGO -->
+    <section id="logo">
+      <div class="container">
+        <h3>Brand Identity</h3>
+        <h2>The Kaeuoi <span class="accent">Logo</span></h2>
+
+        <div class="logo-section">
+          <img src="Triangle.png" alt="Kaeuoi triangle logo" />
+          <div class="logo-text">
+            <p>
+              In its correct orientation the Kaeuoi logo symbolises one's own soul and the
+              comprehension of <strong>idealism over materialism</strong>. Idealism holds that humans structure
+              matter starting with good ideas — a choice in favour of Truth and Love, of
+              creativity and universal laws, of rewarding labour and ideas alike.
+            </p>
+            <p>
+              The inverted orientation represents the opposite: materialism, determination by
+              external forces, and the suppression of ideas without remuneration. The inverted
+              logo may not be used.
+            </p>
+            <p>
+              <a href="Triangle.png" download>Download .PNG</a> &nbsp;·&nbsp;
+              <a href="Triangle.svg" download>Download .SVG</a>
+            </p>
+          </div>
         </div>
-        
-         <nav>
-          <ul>
-            
-            <li><a href="https://africahead.github.io/Africahead/Team.html" target="_blank">Team</a></li>
-            <li><a href="https://africahead.github.io/Africahead/Contact.html" target="_blank">Contact</a></li>
-            <li><a href="" target="_blank">Menu</a></li>
-            <li><a href="" target="_blank">Menu</a></li>
-                
-          </ul>
-        </nav>
-      </footer>
-      
-      
-      
-    </body>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <h3>Get in Touch</h3>
+        <h2>Contact <span class="accent">Details</span></h2>
+
+        <div class="contact-strip">
+          <div class="contact-item">
+            <span class="icon">📞</span>
+            <span>+27 (0)82 447 7125</span>
+          </div>
+          <div class="contact-item">
+            <span class="icon">✉️</span>
+            <a href="mailto:africahead2@gmail.com?subject=Kaeuoi (KAE) tokens">africahead2@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="icon">💬</span>
+            <a href="https://t.me/ippaex" target="_blank" rel="noopener">IPPAEX Telegram</a>
+          </div>
+          <div class="contact-item">
+            <span class="icon">📱</span>
+            <a href="https://chat.whatsapp.com/K5sjXzrA81lLDukeNe1CG7" target="_blank" rel="noopener">WhatsApp Group</a>
+          </div>
+          <div class="contact-item">
+            <span class="icon">🌐</span>
+            <a href="https://africahead.github.io/Africahead/Promotions.html" target="_blank" rel="noopener">Other Social Media</a>
+          </div>
+        </div>
+
+        <a class="btn" href="https://t.me/ippaex" target="_blank" rel="noopener">
+          Join Telegram Community →
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================
+       FOOTER
+  ====================================================== -->
+  <footer>
+    <div class="container">
+      <a href="https://www.africahead.co.za" target="_blank" rel="noopener">
+        <img src="img/logo.png" alt="Africahead" style="height:30px; vertical-align:middle; margin-bottom:0.6rem; opacity:0.6;" />
+      </a>
+      <br />
+      <a href="https://africahead.github.io/Africahead/Team.html" target="_blank" rel="noopener">Team</a>
+      &nbsp;·&nbsp;
+      <a href="https://africahead.github.io/Africahead/Contact.html" target="_blank" rel="noopener">Contact</a>
+      &nbsp;·&nbsp;
+      <a href="https://africahead.github.io/Africahead/IppartsExchange.html" target="_blank" rel="noopener">IPPAEX</a>
+      <br /><br />
+      © Kaeuoi · Africahead · All rights reserved
+    </div>
+  </footer>
+
+</body>
 </html>
